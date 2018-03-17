@@ -1,4 +1,7 @@
 <?php
+
+include_once("utility.php");
+
 class Route
 {
 
@@ -23,16 +26,15 @@ class Route
       // gets the class inside the file, ***can throw if the class doesnt exist***
       //debug_to_console("Get controlled");
       $mcontroller = $this->GetController();
-      
+      $mcontroller->Activate($this->routeInfo);
       // we should have a real active controller class here,  but now we need an action for the controller, this can throw if no index()
      // $controller->Activate($this->routeInfo);
      }
      catch(Exception $e)
      {
       if( constant('REDIRECT_TO_404_ON_ROUTING_ERROR') === 'FALSE' ) {
-       debug_to_console("Hmm");
+       debug_to_console($e->getMessage());
        echo $e->getMessage();
-       return;
       }
       else{
          return new View("404");
@@ -45,13 +47,13 @@ class Route
 
   public function EchoRouteInfo()
   {
-      var_dump($this->routeInfo);
+    debug_to_console(var_dump($this->routeInfo));
   }
   // instead of a switch, we could store these in a database or use an associative array, but the list of controllers are very limited, it wont get out of control.  IF it did I would move it to an array.
   public function GetControllerPath()
   {
        require_once('utility.php');
-
+       
        $controllerPath = 'controllers/';
        $controller = isset($this->routeInfo['params'][0]) ? $this->routeInfo['params'][0] : null;
 
@@ -102,16 +104,24 @@ class Route
 
     debug_to_console($combo1);
     if(class_exists($combo1) ){
-      return new $combo1($this->routeInfo);
+      $this->routeInfo['UsingControllerName'] = $combo1;
+      $controller = new $combo1();
+      return $controller;
     }
     else if ( class_exists($combo2) ){
-      return new $combo2($this->routeInfo);
+      $this->routeInfo['UsingControllerName'] = $combo2;
+      $controller = new $combo2();
+      return $controller;
     }
     else if( class_exists($combo3) ){
-      return new $combo3($this->routeInfo);
+      $this->routeInfo['UsingControllerName'] = $combo3;
+      $controller = new $combo3();
+      return $controller;
     }
     else if( class_exists($combo4) ){
-      return new $combo4($this->routeInfo);
+      $this->routeInfo['UsingControllerName'] = $combo4;
+      $controller = new $combo4();
+      return $controller;
     }
     else{
       $message = '<h4>Unable to find a class by the name(s) of <br>' . $combo1 . ', ' . $combo2 . ', ' .  $combo3 . ', ' . $combo4 . ' within ' . $this->routeInfo['UsingPath'] . '</h4>';

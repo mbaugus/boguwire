@@ -6,29 +6,30 @@ class Controller
 {
 	private $routeInfo = null;
 
-	function __constructor($routeInfo)
+	function __constructor()
+	{
+	}
+
+	public function Activate($routeInfo)
 	{
 		$this->routeInfo = $routeInfo;
 		$this->ActivateAction();
 	}
 
-	public function Activate()
+	private function ActivateAction($action = null)
 	{
-		$this->ActivateAction();
-	}
-
-	private function ActivateAction()
-	{
-		debug_to_console($this->routeInfo["params"]);
-		echo var_dump($this->routeInfo);
-    	require_once($this->routeInfo["UsingPath"]);
-
-    	$params = $this->routeInfo["params"];
-    	$action = isset($params[1]) ? $params[1] : null;
-        $controllerName = $this->routeInfo["UsingControllerName"];
+		require_once($this->routeInfo["UsingPath"]);
+		
+		$controllerName = $this->routeInfo["UsingControllerName"];
+		$params = $this->routeInfo["params"];
+		if($action == null){
+			$action = isset($params[1]) ? $params[1] : null;
+		}
     	if($action == null){ // must resolve to an index() if there is no action.  throw error if no index is defined.
     		$action = "index";
     	}
+
+		debug_to_console("In Controller: " . $controllerName . " Action: " . $action);
 
     	$lowerAction =  strtolower($action);
     	$upperAction = strtoupper($action);
@@ -44,8 +45,13 @@ class Controller
       		return $this->$capitalAction();
     	}
     	else{
-    		$msg = "<h4>Unable to find a suitable action within the controller. " . $this->routeInfo["UsingControllerName"] . " " . $this->routeInfo["UsingPath"] . "<br>" . $lowerAction . ", " . $upperAction . ", " . $capitalAction . "<br>";  
-    		throw new Exception($msg);
+			if($lowerAction == 'index'){
+				$msg = "<h4>Unable to find a suitable action within the controller. " . $this->routeInfo["UsingControllerName"] . " " . $this->routeInfo["UsingPath"] . "<br>" . $lowerAction . ", " . $upperAction . ", " . $capitalAction . "<br>";  
+				throw new Exception($msg);
+			}
+			else{
+				return $this->ActivateAction("index");
+			}
     	}
 
 

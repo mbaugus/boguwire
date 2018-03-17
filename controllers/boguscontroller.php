@@ -7,6 +7,7 @@ class BogusController extends Controller
 	{
 		echo "<h1>WE MADE IT TO BOGUS</h1>";
 	}
+		
 	public function Hello()
 	{
 		echo "<h1>HELLO</h1>";
