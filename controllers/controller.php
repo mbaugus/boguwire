@@ -5,6 +5,7 @@ require_once('./utility.php');
 class Controller
 {
 	private $routeInfo = null;
+	private $viewData = null;
 
 	function __constructor()
 	{
@@ -14,6 +15,52 @@ class Controller
 	{
 		$this->routeInfo = $routeInfo;
 		$this->ActivateAction();
+	}
+
+	private function View($name = null)
+	{
+		if($name == null || $name = ""){
+			$name = $this->routeInfo['UsingControllerName'];
+		}
+		$fileName = $this->FindViewFile($name);
+
+	}
+	private function FindViewFile($name)
+	{
+       require_once('utility.php');
+	   $viewPath = './views/';
+	   $viewPathLower = $viewPath . strtolower($name) . 'php';
+	   $viewPathUCFirst = $viewPath . ucfirst($LowerName) . 'php';
+	   $viewPathUpper = $viewPath . strtoupper($viewPath) . 'php';
+
+    	if(fileExists(){
+           $this->routeInfo['UsingPath'] = $controllerPath . 'mainController.php';
+         }
+         else if(fileExists($controllerPath . 'main.php')){
+           $this->routeInfo['UsingPath'] = $controllerPath . 'main.php';
+         }
+         else{
+          throw new Exception("<h4>Unable to find a main controller.</h4>");
+         }
+       }
+       else
+       {
+         if(fileExists($controllerPath . $controller . 'controller.php')){
+          $this->routeInfo['UsingPath'] = $controllerPath . $controller . 'controller.php'; 
+         }
+         else if(fileExists($controllerPath . $controller . '.php')){
+          $this->routeInfo['UsingPath'] = $controllerPath . $controller . '.php';
+         }
+         else{
+           throw new Exception("<h4>Unable to find a controller.</h4>" . $controller);
+         }
+      }
+  }
+	}
+
+	private function SetViewData($data)
+	{
+		$this->viewData = $data;
 	}
 
 	private function ActivateAction($action = null)
