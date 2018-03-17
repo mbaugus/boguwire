@@ -21,13 +21,16 @@ class Route
       // gets the file path for the controller, ***can throw if path doesnt exist***
       $controllerPath = $this->GetControllerPath();
       // gets the class inside the file, ***can throw if the class doesnt exist***
-      $controller = $this->GetController();
+      //debug_to_console("Get controlled");
+      $mcontroller = $this->GetController();
+      
       // we should have a real active controller class here,  but now we need an action for the controller, this can throw if no index()
-      $controller->Activate($this->routeInfo);
+     // $controller->Activate($this->routeInfo);
      }
      catch(Exception $e)
      {
       if( constant('REDIRECT_TO_404_ON_ROUTING_ERROR') === 'FALSE' ) {
+       debug_to_console("Hmm");
        echo $e->getMessage();
        return;
       }
@@ -86,7 +89,7 @@ class Route
   public function GetController()
   {
     include($this->routeInfo['UsingPath']);
-    
+    debug_to_console($this->routeInfo['UsingPath']);
     $LowerName = strtolower($this->routeInfo['UsingControllerName']);
     $CapitalizedName = ucfirst($LowerName); 
     $LowerController = "controller";
@@ -97,17 +100,18 @@ class Route
     $combo3 = $CapitalizedName . $LowerController;
     $combo4 = $CapitalizedName . $UpperController;
 
+    debug_to_console($combo1);
     if(class_exists($combo1) ){
-      return new $combo1();
+      return new $combo1($this->routeInfo);
     }
     else if ( class_exists($combo2) ){
-      return new $combo2();
+      return new $combo2($this->routeInfo);
     }
     else if( class_exists($combo3) ){
-      return new $combo3();
+      return new $combo3($this->routeInfo);
     }
     else if( class_exists($combo4) ){
-      return new $combo4();
+      return new $combo4($this->routeInfo);
     }
     else{
       $message = '<h4>Unable to find a class by the name(s) of <br>' . $combo1 . ', ' . $combo2 . ', ' .  $combo3 . ', ' . $combo4 . ' within ' . $this->routeInfo['UsingPath'] . '</h4>';

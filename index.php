@@ -1,6 +1,6 @@
 <?php
    define('LOCATION', 'LOCAL'); // 'ONLINE/OFFLINE
-   define('SHOW_SESSION', 'TRUE'); // prints out session info before header
+   define('SHOW_SESSION', 'FALSE'); // prints out session info before header
    define('USESDB',  'FALSE');
    define('REDIRECT_TO_404_ON_ROUTING_ERROR', 'FALSE');
 

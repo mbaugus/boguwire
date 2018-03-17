@@ -9,6 +9,7 @@ class Controller
 	function __constructor($routeInfo)
 	{
 		$this->routeInfo = $routeInfo;
+		$this->ActivateAction();
 	}
 
 	public function Activate()
@@ -18,7 +19,7 @@ class Controller
 
 	private function ActivateAction()
 	{
-
+		debug_to_console($this->routeInfo["params"]);
 		echo var_dump($this->routeInfo);
     	require_once($this->routeInfo["UsingPath"]);
 
