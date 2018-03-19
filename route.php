@@ -6,8 +6,12 @@ class Route
 {
 
   private $routeInfo = [
+      'controller' => "",
+      'action' => "",
       'UsingControllerName' => "",
       'UsingPath' => "",
+      'UsingViewPath' => "",
+      'UsingViewName' => "",
       'db' => null,
       'baseWebPath' => null,
       'params' => null
@@ -23,6 +27,7 @@ class Route
      {
       // gets the file path for the controller, ***can throw if path doesnt exist***
       $controllerPath = $this->GetControllerPath();
+      
       // gets the class inside the file, ***can throw if the class doesnt exist***
       //debug_to_console("Get controlled");
       $mcontroller = $this->GetController();
@@ -56,10 +61,11 @@ class Route
        
        $controllerPath = 'controllers/';
        $controller = isset($this->routeInfo['params'][0]) ? $this->routeInfo['params'][0] : null;
-
+       $this->routeInfo["controller"] = $controller;
        $this->routeInfo['UsingControllerName'] = $controller;
 
        if($controller === null){
+         $this->routeInfo["controller"] = 'main';
          $this->routeInfo['UsingControllerName'] = 'main';
          if(fileExists($controllerPath . 'mainController.php')){
            $this->routeInfo['UsingPath'] = $controllerPath . 'mainController.php';

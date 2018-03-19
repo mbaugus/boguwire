@@ -6,9 +6,8 @@ class MainController extends Controller
 	
 	public function Index()
 	{
-		echo "<h1>WE MADE IT</h1>";
+		return $this->View();
 	}
-	
 }
 ?>
 

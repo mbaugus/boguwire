@@ -3,6 +3,18 @@ if( !defined('LOCATION') ){
   die("Access denied.");
 }
 
+   // VIEW FOOTER DEFAULT
+   define("VIEW_HEADER_DEFAULT", './views/shared/header.php');
+   // VIEW HEADER DEFAULT
+   define("VIEW_FOOTER_DEFAULT", './views/shared/footer.php');
+   // NO RESOURCE FOUND VIEW
+   define("VIEW_RESOURCE_NOT_FOUND", './views/errorview.php');
+   define("VIEW_ERROR_CLASS", "Error");
+   // DEBUG_CONSOLE_LOG function will display if true
+   define("DEBUG_CONSOLE", 'TRUE');
+
+   define('__ROOT__', dirname(dirname(__FILE__))); 
+
     // Database credentials
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');

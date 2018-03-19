@@ -11,8 +11,16 @@ class BogusController extends Controller
 			'thing3' => 3
 		];
 		$this->SetViewData($data);
+		return $this->View();
+	}
 
-		return View();
+	public function Edit()
+	{
+
+	}
+	public function Create()
+	{
+		//return new view("create.bogus.view.php");
 	}
 }
 ?>

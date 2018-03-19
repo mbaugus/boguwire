@@ -5,7 +5,7 @@ class ResumeController extends Controller
 {
 	public function Index()
 	{
-		echo "<h1>This is my resume</h1>";
+		return $this->View();
     }
 }
 ?>

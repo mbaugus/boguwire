@@ -35,12 +35,16 @@ function getUrlInfo()
 }
 
 function debug_to_console( $data ) {
+    if(constant("DEBUG_CONSOLE") == 'FALSE'){
+        return;
+    }
     $output = $data;
     if ( is_array( $output ) )
         $output = implode( ',', $output);
 
-    echo "<script>console.log( 'Debug Objects: " . $output . "' );</script>";
+    echo "<script>console.log( 'Debug: " . $output . "' );</script>";
 }
+
 
 
 ?>

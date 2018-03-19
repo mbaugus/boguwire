@@ -33,3 +33,5 @@
      $route->EchoRouteInfo();
      var_dump($_SESSION);
    }
+
+   ?>
