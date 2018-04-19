@@ -78,7 +78,6 @@ abstract class View
 		foreach ($sources['js'] as $js => $value) {
 			$output .= "<script src=" . $value . "></script>";
 		}
-
 		$output .= $this->additionalScripts;
 		return $output;
 	 }
